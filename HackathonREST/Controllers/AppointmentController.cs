@@ -58,6 +58,14 @@ namespace HackathonREST.Controllers
             Regex rgx = new Regex(@"(^[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$)");
             if (rgx.IsMatch(appt.date))
             {
+                // Validation: only one appointment can be at a location per day
+                foreach (Appointment apptMade in _context.Appointments)
+                {
+                    if (appt.date.Equals(apptMade.date) && appt.centerId == apptMade.centerId)
+                    {
+                        return BadRequest();
+                    }
+                }
                 _context.Appointments.Add(appt);
                 await _context.SaveChangesAsync();
                 return CreatedAtAction(nameof(GetAppointment), new { id = appt.id }, appt);
