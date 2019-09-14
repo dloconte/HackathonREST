@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HackathonREST.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,6 +27,9 @@ namespace HackathonREST
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppointmentContext>(opt => opt.UseInMemoryDatabase("AppointmentList"));
+            services.AddDbContext<CenterContext>(opt => opt.UseInMemoryDatabase("CenterList"));
+            services.AddDbContext<CenterTypeContext>(opt => opt.UseInMemoryDatabase("CenterTypeList"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -40,7 +45,9 @@ namespace HackathonREST
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
