@@ -34,8 +34,8 @@ namespace HackathonREST.Controllers
                     {
                         CenterType ctype = new CenterType();
 
-                        ctype.id = (int)centerType["Id"];
-                        ctype.value = centerType["Value"].ToString();
+                        ctype.Id = (int)centerType["Id"];
+                        ctype.Value = centerType["Value"].ToString();
 
                         context.CenterTypes.Add(ctype);
                     }
@@ -73,14 +73,14 @@ namespace HackathonREST.Controllers
             _context.CenterTypes.Add(ctype);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCenterType), new { id = ctype.id }, ctype);
+            return CreatedAtAction(nameof(GetCenterType), new { id = ctype.Id }, ctype);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCenterType(int id, CenterType ctype)
         {
-            if (id != ctype.id)
+            if (id != ctype.Id)
             {
                 return BadRequest();
             }

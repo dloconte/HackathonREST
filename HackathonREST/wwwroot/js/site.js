@@ -42,7 +42,7 @@ function getData() {
                 const tr = $("<tr></tr>")
                     .append($("<td></td>").text(item.clientFullName))
                     .append($("<td></td>").text(item.date))
-                    .append($("<td></td>").text(item.centerId))
+                    .append($("<td></td>").text(item.center))
                     .append(
                         $("<td></td>").append(
                             $("<button>Edit</button>").on("click", function () {

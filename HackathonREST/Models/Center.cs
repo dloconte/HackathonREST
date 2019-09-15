@@ -7,10 +7,10 @@ namespace HackathonREST.Models
 {
     public class Center
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string streetAddress { get; set; }
-        public int centerTypeId { get; set; }
-        public string centerTypeValue { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string StreetAddress { get; set; }
+        public int CenterTypeId { get; set; }
+        public string CenterTypeValue { get; set; }
     }
 }

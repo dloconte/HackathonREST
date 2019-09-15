@@ -44,17 +44,17 @@ namespace HackathonREST.Controllers
                     {
                         Center c = new Center();
 
-                        c.id = (int)center["Id"];
-                        c.name = center["Name"].ToString();
-                        c.streetAddress = center["StreetAddress"].ToString();
-                        c.centerTypeId = (int)center["CenterTypeId"];
+                        c.Id = (int)center["Id"];
+                        c.Name = center["Name"].ToString();
+                        c.StreetAddress = center["StreetAddress"].ToString();
+                        c.CenterTypeId = (int)center["CenterTypeId"];
 
-                        for (int i = 1; i < centerTypesArray.Count; i++)
+                        for (int i = 1; i <= centerTypesArray.Count; i++)
                         {
 
                             if ((int)center["CenterTypeId"] == i)
                             {
-                                c.centerTypeValue = centerTypes[i - 1];
+                                c.CenterTypeValue = centerTypes[i - 1];
                             }
                         }
 
@@ -95,14 +95,14 @@ namespace HackathonREST.Controllers
             _context.Centers.Add(c);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCenter), new { id = c.id }, c);
+            return CreatedAtAction(nameof(GetCenter), new { id = c.Id }, c);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCenter(int id, Center c)
         {
-            if (id != c.id)
+            if (id != c.Id)
             {
                 return BadRequest();
             }
