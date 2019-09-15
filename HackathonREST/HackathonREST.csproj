@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <Folder Include="App-Data\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
   <ItemGroup>

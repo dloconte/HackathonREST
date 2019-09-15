@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using HackathonREST.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,7 +45,7 @@ namespace HackathonREST.Controllers
 
             if (appointment == null)
             {
-                return NotFound();
+                return NotFound("No appointment with ID " + id + " exists.");
             }
 
             return appointment;
@@ -63,7 +64,7 @@ namespace HackathonREST.Controllers
                 {
                     if (appt.date.Equals(apptMade.date) && appt.centerId == apptMade.centerId)
                     {
-                        return BadRequest();
+                        return BadRequest("An appointment at center " + apptMade.centerId + " on " + apptMade.date + " exists.");
                     }
                 }
                 _context.Appointments.Add(appt);
@@ -72,7 +73,7 @@ namespace HackathonREST.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest("Date is not in correct format. Please Re-Enter in the format: \"yyyy-MM-dd\".");
             }
         }
 
@@ -82,15 +83,28 @@ namespace HackathonREST.Controllers
         {
             if (id != appt.id)
             {
-                return BadRequest();
+                return BadRequest("No request exists with that ID.");
             }
 
             // Validation: make sure date is in format yyyy-MM-dd
             Regex rgx = new Regex(@"(^[12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$)");
             if (rgx.IsMatch(appt.date))
             {
+                // Validation: only one appointment can be at a location per day
+                foreach (Appointment apptMade in _context.Appointments)
+                {
+                    if (appt.date.Equals(apptMade.date) && appt.centerId == apptMade.centerId)
+                    {
+                        return BadRequest("An appointment at center " + apptMade.centerId + " on " + apptMade.date + " exists.");
+                    }
+                }
+
                 _context.Entry(appt).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
+            }
+            else
+            {
+                return BadRequest("Date is not in correct format. Please Re-Enter in the format: \"yyyy-MM-dd\".");
             }
 
             return NoContent();
@@ -104,7 +118,7 @@ namespace HackathonREST.Controllers
 
             if (appointment == null)
             {
-                return NotFound();
+                return NotFound("No appointment with ID " + id + "exists.");
             }
 
             _context.Appointments.Remove(appointment);
