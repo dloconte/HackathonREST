@@ -12,7 +12,7 @@ using Newtonsoft.Json.Linq;
 
 namespace HackathonREST.Controllers
 {
-    [Route("[controller]")]
+    [Route("centers")]
     [ApiController]
     public class CenterController : ControllerBase
     {

@@ -24,7 +24,7 @@ namespace HackathonREST.Models
         {
 
         }
-
+        
         public DbSet<AppointmentResult> AppointmentResults { get; set; }
     }
 }

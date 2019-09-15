@@ -13,7 +13,7 @@ using System;
 
 namespace HackathonREST.Controllers
 { 
-    [Route("[controller]")]
+    [Route("appointments")]
     [ApiController]
     public class AppointmentController : ControllerBase
     {
